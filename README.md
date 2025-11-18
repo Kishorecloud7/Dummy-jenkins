@@ -79,11 +79,11 @@ pipeline {
 
 * Add:
 
-* ID: dockerhub
+* <h3>ID:</h3> dockerhub
 
-* Username: your-dockerhub-user
+* <h3>Username:</h3> your-dockerhub-user
 
-* Password: your-access-token
+* <h3>Password:</h3> your-access-token
 
 <h3>✔️ 2. Add environment variable in Jenkins</h3>
 
