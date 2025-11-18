@@ -103,8 +103,11 @@ your-app/
 ```
 
 <h2>🚀 What This Pipeline Does</h2>
-<h3> Stage	                             Description          </h3>
+
+```
+<h3>  Stage	                             Description          </h3>
 Checkout Code	                Pulls code from your repo
 Build Docker Image	            Builds your app into a Docker image
 Tag & Push to DockerHub     	Pushes image → DockerHub registry
 Deploy Container	            Pulls latest image & runs the container
+```
