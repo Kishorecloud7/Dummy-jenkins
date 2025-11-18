@@ -79,19 +79,19 @@ pipeline {
 
 * Add:
 
-* <h4>ID:</h4>     dockerhub
+* <h3>ID:     dockerhub </h3>
 
-* <h3>Username:</h3> your-dockerhub-user
+* <h3>Username: your-dockerhub-user</h3>
 
-* <h3>Password:</h3> your-access-token
+* <h3>Password: your-access-token</h3>
 
 <h3>✔️ 2. Add environment variable in Jenkins</h3>
 
 Go to your job → Configure → Build Environment → Use secret text(s)
 
-Secret variable: DOCKERHUB_PASSWORD
+* Secret variable: DOCKERHUB_PASSWORD
 
-Select your DockerHub credential
+* Select your DockerHub credential
 
 <h2>🧩 Folder Structure Example</h2>
 ```
@@ -99,7 +99,6 @@ your-app/
  ├── Dockerfile
  ├── app.js / index.html / main.py (your code)
  └── Jenkinsfile
-
 ```
 
 <h2>🚀 What This Pipeline Does</h2>
