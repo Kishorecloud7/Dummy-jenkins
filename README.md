@@ -94,6 +94,7 @@ Go to your job → Configure → Build Environment → Use secret text(s)
 * Select your DockerHub credential
 
 <h2>🧩 Folder Structure Example</h2>
+
 ```
 your-app/
  ├── Dockerfile
