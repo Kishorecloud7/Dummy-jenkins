@@ -75,15 +75,15 @@ pipeline {
 <h2>📝 What You Need to Configure</h2>
 <h3>✔️ 1. Add DockerHub credentials in Jenkins</h3>
 
-Go to: Jenkins → Manage Credentials
+* Go to: Jenkins → Manage Credentials
 
-Add:
+* Add:
 
-ID: dockerhub
+* ID: dockerhub
 
-Username: your-dockerhub-user
+* Username: your-dockerhub-user
 
-Password: your-access-token
+* Password: your-access-token
 
 <h3>✔️ 2. Add environment variable in Jenkins</h3>
 
