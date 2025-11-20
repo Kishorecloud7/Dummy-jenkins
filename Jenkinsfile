@@ -19,38 +19,46 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                script {
-                    sh """
-                        docker build -t ${IMAGE_NAME}:latest .
-                    """
+                sh 'docker build -t ${IMAGE_NAME}:latest .'
+            }
+        }
+
+        stage('Docker Login') {
+            steps {
+                echo "Logging in to DockerHub..."
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'dockerhub-creds',
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
+                    )
+                ]) {
+                    sh '''
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    '''
                 }
             }
         }
 
         stage('Tag & Push to DockerHub') {
             steps {
-                echo "Tagging and pushing Docker image..."
-                script {
-                    sh """
-                        docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                        docker login -u ${DOCKERHUB_USER} -p \$DOCKERHUB_PASSWORD
-                        docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                    """
-                }
+                echo "Tagging & pushing image..."
+                sh '''
+                    docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                '''
             }
         }
 
         stage('Deploy Container') {
             steps {
                 echo "Deploying Docker container..."
-                script {
-                    sh """
-                        docker stop ${CONTAINER_NAME} || true
-                        docker rm ${CONTAINER_NAME} || true
-                        docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                        docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                    """
-                }
+                sh '''
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                    docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                '''
             }
         }
     }
@@ -61,18 +69,6 @@ pipeline {
         }
         failure {
             echo "Pipeline Failed!"
-        }
-    }
-}
-    
-    stage('Docker Login') {
-    steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds', 
-                                          usernameVariable: 'DOCKER_USER', 
-                                          passwordVariable: 'DOCKER_PASS')]) {
-            sh '''
-                echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            '''
         }
     }
 }
