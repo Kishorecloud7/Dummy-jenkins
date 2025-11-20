@@ -1,10 +1,10 @@
-# Use official Node image
+# Use proper Node version
 FROM node:18
 
 # Set working directory
 WORKDIR /app
 
-# Copy package files
+# Copy only package files first
 COPY package*.json ./
 
 # Install dependencies
@@ -13,8 +13,6 @@ RUN npm install
 # Copy the rest of the app
 COPY . .
 
-# Expose application port
-EXPOSE 8080
-
-# Start the app
+# Expose and start
+EXPOSE 3000
 CMD ["npm", "start"]
