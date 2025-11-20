@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "myapp-image"
         CONTAINER_NAME = "myapp-container"
-        DOCKERHUB_USER = "your-dockerhub-username"
+        DOCKERHUB_USER = "kishorecloud7"
     }
 
     stages {
