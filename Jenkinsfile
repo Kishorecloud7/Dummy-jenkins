@@ -34,7 +34,7 @@ pipeline {
                     )
                 ]) {
                     sh '''
-                        echo "$Kishore&kishore123" | docker login -u "$kishorecloud7" --password-stdin
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
                     '''
                 }
             }
@@ -44,8 +44,8 @@ pipeline {
             steps {
                 echo "Tagging & pushing image..."
                 sh '''
-                    docker tag ${IMAGE_NAME}:latest ${kishorecloud7}/${IMAGE_NAME}:latest
-                    docker push ${kishorecloud7}/${IMAGE_NAME}:latest
+                    docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
                 '''
             }
         }
@@ -56,8 +56,8 @@ pipeline {
                 sh '''
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
-                    docker pull ${kishorecloud7}/${IMAGE_NAME}:latest
-                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${kishorecloud7}/${IMAGE_NAME}:latest
+                    docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
                 '''
             }
         }
