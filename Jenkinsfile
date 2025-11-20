@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "myapp-image"
         CONTAINER_NAME = "myapp-container"
-        DOCKERHUB_USER = "kishorecloud7"
+        DOCKERHUB_USER = "your-dockerhub-username"
     }
 
     stages {
@@ -29,8 +29,8 @@ pipeline {
                 withCredentials([
                     usernamePassword(
                         credentialsId: 'dockerhub-creds',
-                        usernameVariable: 'kishorecloud7',
-                        passwordVariable: 'Kishore&kishore123'
+                        usernameVariable: 'DOCKER_USER',
+                        passwordVariable: 'DOCKER_PASS'
                     )
                 ]) {
                     sh '''
