@@ -1,6 +1,10 @@
 <h1>🚀 Node.js App with Jenkins CI/CD Pipeline</h1>
 This project demonstrates a complete **Continuous** Integration and Continuous  __Deployment__  (CI/CD) pipeline using Jenkins and Docker for a simple Node.js application.
 
+**This text will be bold**
+__This text will also be bold__
+
+
 <h2>🎯 Objective</h2>
 To automate the process of building, testing, and deploying a Node.js application using Jenkins.
 
