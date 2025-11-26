@@ -13,10 +13,11 @@ To automate the process of building, testing, and deploying a **Node.js** applic
 * **Docker**
 * **GitHub**
 
+ |Learning | Outcome |
+ |---------|---------|
+ |Jenkins  | Nothing |
+ |Docker   | Nothing |
 
-|Learning | Outcome |
-|Jenkins  | Nothing |
-|Docker   | NOthing |
 
 <h2>📁 Folder Structure</h2>
 
