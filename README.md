@@ -14,7 +14,6 @@ To automate the process of building, testing, and deploying a **Node.js** applic
 * **GitHub**
 
  |Learning | Outcome |
- |---------|---------|
  |Jenkins  | Nothing |
  |Docker   | Nothing |
 
