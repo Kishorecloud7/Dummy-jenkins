@@ -57,7 +57,7 @@ pipeline {
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
                     docker pull ${kishorecloud7}/${myapp-image}:latest
-                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${kishorecloud7}/${myapp-image}:latest
                 '''
             }
         }
