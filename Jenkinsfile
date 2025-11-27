@@ -44,7 +44,7 @@ pipeline {
             steps {
                 echo "Tagging & pushing image..."
                 sh '''
-                    docker tag ${IMAGE_NAME}:latest ${kishorecloud7}/${myapp-image}:latest
+                    docker tag ${myapp-image}:latest ${kishorecloud7}/${myapp-image}:latest
                     docker push ${kishorecloud7}/${myapp-image}:latest
                 '''
             }
