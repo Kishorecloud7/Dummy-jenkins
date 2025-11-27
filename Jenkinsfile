@@ -19,7 +19,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                sh 'docker build -t ${IMAGE_NAME}:latest .'
+                sh "docker build -t ${IMAGE_NAME}:latest ."
             }
         }
 
@@ -43,22 +43,24 @@ pipeline {
         stage('Tag & Push to DockerHub') {
             steps {
                 echo "Tagging & pushing image..."
-                sh '''
-                    docker tag ${myapp-image}:latest ${kishorecloud7}/${myapp-image}:latest
-                    docker push ${kishorecloud7}/${myapp-image}:latest
-                '''
+                sh """
+                    docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                """
             }
         }
 
         stage('Deploy Container') {
             steps {
                 echo "Deploying Docker container..."
-                sh '''
+                sh """
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
-                    docker pull ${kishorecloud7}/${myapp-image}:latest
-                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${kishorecloud7}/${myapp-image}:latest
-                '''
+
+                    docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+
+                    docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                """
             }
         }
     }
