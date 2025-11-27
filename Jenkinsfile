@@ -4,7 +4,7 @@ pipeline {
     environment {
         IMAGE_NAME = "myapp-image"
         CONTAINER_NAME = "myapp-container"
-        DOCKERHUB_USER = "your-dockerhub-username"
+        DOCKERHUB_USER = "kishorecloud7"
     }
 
     stages {
@@ -44,8 +44,8 @@ pipeline {
             steps {
                 echo "Tagging & pushing image..."
                 sh '''
-                    docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker tag ${IMAGE_NAME}:latest ${kishorecloud7}/${myapp-image}:latest
+                    docker push ${kishorecloud7}/${myapp-image}:latest
                 '''
             }
         }
@@ -56,7 +56,7 @@ pipeline {
                 sh '''
                     docker stop ${CONTAINER_NAME} || true
                     docker rm ${CONTAINER_NAME} || true
-                    docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
+                    docker pull ${kishorecloud7}/${myapp-image}:latest
                     docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
                 '''
             }
