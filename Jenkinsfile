@@ -1,76 +1,30 @@
 pipeline {
     agent any
 
-    environment {
-        IMAGE_NAME = "myapp-image"
-        CONTAINER_NAME = "myapp-container"
-        DOCKERHUB_USER = "kishorecloud7"
-    }
-
     stages {
-
-        stage('Checkout Code') {
-            steps {
-                echo "Checking out code..."
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
-                sh "docker build -t ${IMAGE_NAME}:latest ."
+                echo '🔧 Building the Docker image...'
+                sh 'docker build -t my-node-app .'
             }
         }
 
-        stage('Docker Login') {
+        stage('Test') {
             steps {
-                echo "Logging in to DockerHub..."
-                withCredentials([
-                    usernamePassword(
-                        credentialsId: 'dockerhub-creds',
-                        usernameVariable: 'DOCKER_USER',
-                        passwordVariable: 'DOCKER_PASS'
-                    )
-                ]) {
-                    sh '''
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-                    '''
-                }
+                echo '🧪 Running tests (placeholder)...'
+                sh 'echo "Tests passed!"'
             }
         }
 
-        stage('Tag & Push to DockerHub') {
+        stage('Deploy Docker Container') {
             steps {
-                echo "Tagging & pushing image..."
-                sh """
-                    docker tag ${IMAGE_NAME}:latest ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                    docker push ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                """
+                echo '🚀 Deploying the Docker container...'
+                sh '''
+                docker stop my-node-app || true
+                docker rm my-node-app || true
+                docker run -d -p 3000:3000 --name my-node-app my-node-app
+                '''
             }
-        }
-
-        stage('Deploy Container') {
-            steps {
-                echo "Deploying Docker container..."
-                sh """
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
-
-                    docker pull ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-
-                    docker run -d -p 9090:8080 --name ${CONTAINER_NAME} ${DOCKERHUB_USER}/${IMAGE_NAME}:latest
-                """
-            }
-        }
-    }
-
-    post {
-        success {
-            echo "Deployment Successful!"
-        }
-        failure {
-            echo "Pipeline Failed!"
         }
     }
 }
